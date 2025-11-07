@@ -148,12 +148,12 @@
               <h5 style="color:#fff">A <span class="typing" style="font-weight: 300; color:#004d40"></span></h5>
               <h5>Hope you enjoy my website.</h5>
             </div>
-            <div class="social">
-              <a href="https://github.com/tannapatph" target="_blank">
-                <button class="icon-btn github">
-                  <i class="fa fa-github"></i>
-                </button>
-              </a>
+            <div class="social"> 
+              <a  href="https://github.com/tannapatph" target="_blank"> 
+                <button class="icon-btn github"> 
+                  <i class="fa fa-github"></i> 
+                </button> 
+              </a> 
             </div>
             <div class='buttons'>
               <a href="#about" class="readme">Read More</a>
@@ -376,31 +376,68 @@
     </section>
 
     <!-- Eight Section: Contact -->
-    <section id="contact" class="section scrollspy full-height">
+    <section id="contact" class="section scrollspy">
       <h3 class="page-title white-text teal">Contact</h3>
       <div class="container">
-        <p>
-          <a aria-label="Call Tannapat" data-position="top" data-tooltip="Call Tannapat"
-            class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-phone"></i><a
-              aria-label="Call Tannapat">Tel: (+66) 61 245 1446</a></a>
-        </p>
-        <p>
-          <a aria-label="Email Tannapat" href="mailto:tannapatph@gmail.com" target="_blank" data-position="top"
-            data-tooltip="Email Tannapat" class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-              class="fa fa-envelope"></i><a aria-label="Email Tannapat" href="mailto:Tannapatph@gmail.com"
-              class="hoverline">tannapatph@gmail.com</a></a>
-        </p>
-        <p>
-          <a aria-label="View Tannapat on GitHub" href="https://github.com/tannapatph" target="_blank"
-            data-position="top" data-tooltip="View Tannapat on GitHub"
-            class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-github"></i><a
-              aria-label="Tannapat on Github" href="https://github.com/tannapatph" class="hoverline"
-              target="_blank">github.com/tannapatph</a></a>  
-        </p>
+        <div class="row">
+          <div class="col s12 m10 l8 offset-m1 offset-l2">
+            <div class="card contact-card z-depth-2">
+              <div class="card-content">
+                <span class="card-title">Send me a message</span>
+
+                <form id="contactForm" class="row">
+                  <div class="input-field col s12 m6">
+                    <input id="name" name="name" type="text" required>
+                    <label for="name">Your name</label>
+                  </div>
+
+                  <div class="input-field col s12 m6">
+                    <input id="email" name="email" type="email" required>
+                    <label for="email">Email</label>
+                  </div>
+
+                  <div class="input-field col s12">
+                    <textarea id="message" name="message" class="materialize-textarea" rows="4" required></textarea>
+                    <label for="message">Message</label>
+                  </div>
+
+                  <div class="col s12">
+                    <button id="sendBtn" class="btn waves-effect waves-light teal darken-2" type="submit">
+                      <i class="fa fa-paper-plane left"></i> Send
+                    </button>
+                    <span id="contactStatus" class="status-msg"></span>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- ช่องทางติดต่อเดิมของคุณ (โทร/อีเมล/GitHub) จะคงไว้ด้านล่างได้ -->
+            <h3 class="page-title white-text teal">My contact</h3>
+            <div class="container">
+              <p>
+                <a aria-label="Call Tannapat" data-position="top" data-tooltip="Call Tannapat"
+                  class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-phone"></i><a
+                    aria-label="Call Tannapat">Tel: (+66) 61 245 1446</a></a>
+              </p>
+              <p>
+                <a aria-label="Email Tannapat" href="mailto:tannapatph@gmail.com" target="_blank" data-position="top"
+                  data-tooltip="Email Tannapat" class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
+                    class="fa fa-envelope"></i><a aria-label="Email Tannapat" href="mailto:Tannapatph@gmail.com"
+                    class="hoverline">tannapatph@gmail.com</a></a>
+              </p>
+              <p>
+                <a aria-label="View Tannapat on GitHub" href="https://github.com/tannapatph" target="_blank"
+                  data-position="top" data-tooltip="View Tannapat on GitHub"
+                  class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-github"></i><a
+                    aria-label="Tannapat on Github" href="https://github.com/tannapatph" class="hoverline"
+                    target="_blank">github.com/tannapatph</a>
+                </a>  
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
-
   <!-- typed.js -->
   <script src="vendor/typed.js/typed.min.js"></script>
   <script type="text/javascript">
@@ -454,6 +491,41 @@
       } else {
         root.removeAttribute('data-theme');
         localStorage.setItem('theme','light');
+      }
+    });
+  </script>
+
+  <script>
+    const API_BASE = "http://localhost:3000";
+
+    const form = document.getElementById("contactForm");
+    const btn  = document.getElementById("sendBtn");
+    const statusEl = document.getElementById("contactStatus");
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = Object.fromEntries(new FormData(form).entries());
+
+      btn.disabled = true;
+      statusEl.textContent = "Sending...";
+      statusEl.style.color = "#607d8b";
+
+      try{
+        const r = await fetch(`${API_BASE}/api/contact`, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(body)
+        });
+        if(!r.ok) throw new Error("Send failed");
+
+        statusEl.textContent = "Sent! Thank you.";
+        statusEl.style.color = "#2e7d32";
+        form.reset();
+      }catch(err){
+        statusEl.textContent = "Error: " + err.message;
+        statusEl.style.color = "#e53935";
+      }finally{
+        btn.disabled = false;
       }
     });
   </script>

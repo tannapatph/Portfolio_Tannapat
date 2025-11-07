@@ -75,7 +75,6 @@
   color: #FFFFFF;
 }
 
-
 :root { color-scheme: light dark; }
 
 /* light-mode */
@@ -106,9 +105,7 @@
 
 :root[data-theme="dark"] body,
 :root[data-theme="dark"] .section,
-:root[data-theme="dark"] .container,
 :root[data-theme="dark"] .card-content, 
-:root[data-theme="dark"] .icon-btn github,
 :root[data-theme="dark"] p,
 :root[data-theme="dark"] li,
 :root[data-theme="dark"] span,
@@ -460,6 +457,7 @@ h3 {
 
 .card .card-title {
   font-size: 24px;
+  color: #004d40;
 }
 
 .card .card-content .card-title {
@@ -793,3 +791,65 @@ small {
 .theme-toggle { 
   transform: translateZ(0); 
 }
+
+.social .icon-btn.github{
+  background-color: #14b8a6;   
+  line-height: 50px;          
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.social .icon-btn.github i{
+  color: #000;               
+}
+
+.social .icon-btn.github:hover{
+  background-color: #000;     
+}
+.social .icon-btn.github:hover i{
+  color: #fff;              
+}
+
+/* Contact card look */
+.contact-card {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* ปรับระยะ label/materialize ให้พอดี */
+.input-field input[type=text],
+.input-field input[type=email],
+.input-field textarea {
+  color: var(--text, #263238);
+}
+
+[data-theme="dark"] .input-field input[type=text],
+[data-theme="dark"] .input-field input[type=email],
+[data-theme="dark"] .input-field textarea {
+  color: #fff;
+}
+
+/* เส้นโฟกัส */
+.input-field input:focus,
+.input-field textarea:focus {
+  border-bottom: 2px solid #00897b !important; /* teal-ish */
+  box-shadow: 0 1px 0 0 #00897b !important;
+}
+
+/* label โฟกัส */
+.input-field input:focus + label,
+.input-field textarea:focus + label {
+  color: #00897b !important;
+}
+
+/* ปุ่ม */
+#sendBtn {
+  border-radius: 999px;
+  padding: 0 22px;
+}
+
+/* ข้อความสถานะ */
+.status-msg {
+  margin-left: 12px;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
