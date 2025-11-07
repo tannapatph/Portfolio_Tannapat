@@ -13,12 +13,39 @@
   height: auto;
 }
 
+
+/* ตัวห่อไอคอน (span หรือ img ที่มีคลาสนี้) */
+.theme-toggle .icon-sun-and-moon{
+  position: absolute;
+  top: 50%;
+  left: -18px;                     /* << ขยับไปทางซ้าย (ปรับเลขได้) */
+  transform: translateY(-50%);     /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+  width: 32px;
+  height: 32px;
+  pointer-events: none;            /* คลิกโดน label ได้เต็มที่ */
+}
+
+/* ถ้าใช้ <img class="icon-sun-and-moon"> ข้างใน span อีกชั้น */
+.theme-toggle .icon-sun-and-moon img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+
+
 .tracker {
   /* visibility: hidden; */
   position: fixed;
   /* margin-inline-end: auto;  */
   bottom: 0; 
   right: 0;
+}
+.theme-toggle .switch,
+.theme-toggle .switch::before,
+.theme-toggle .switch::after{
+  all: unset !important;  /* เผื่อมี .switch ตัวเก่าติดมา */
 }
 
 @import url(https://fonts.googleapis.com/css?family=Poiret+One);
@@ -47,10 +74,6 @@
   color: black;
 }
 
-.linkedin {
-  color: #0077b5;
-}
-
 .angellist {
   color: grey;
 }
@@ -60,9 +83,96 @@
   color: #FFFFFF;
 }
 
-.linkedin:hover {
-  background-color: #0077b5;
+/* ให้เบราว์เซอร์รู้ว่ามีสองโหมดสี */
+:root { color-scheme: light dark; }
+
+/* โหมดสว่าง (ค่าเริ่มต้น) */
+:root{
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --card: #f8fafc;
+  --brand: #0d9488;   /* teal ของเว็บคุณ */
+  --border: #e2e8f0;
 }
+
+/* โหมดมืด */
+:root[data-theme="dark"]{
+  --bg: #0b1220;
+  --text: #ffffff;
+  --muted: #ffffff;
+  --card: #0f172a;
+  --brand: #14b8a6;
+  --border: #1f2937;
+}
+
+/* ---- Dark mode text overrides (เฉพาะโหมดมืด) ---- */
+:root[data-theme="dark"] {
+  --text: #ffffff;
+  --muted: #e5e7eb;   /* สีเทาอ่านง่ายในพื้นมืด */
+}
+
+/* ตัวอักษรหลักให้ขาว */
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .section,
+:root[data-theme="dark"] .container,
+:root[data-theme="dark"] .card-content,
+:root[data-theme="dark"] p,
+:root[data-theme="dark"] li,
+:root[data-theme="dark"] span,
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] h5,
+:root[data-theme="dark"] h6 {
+  color: #c7b9b9 !important;
+}
+
+/* จัดการคลาส/องค์ประกอบที่ล็อกสีทับไว้ */
+:root[data-theme="dark"] .grey-text,
+:root[data-theme="dark"] ul.side-nav.fixed.table-of-contents li:not(.logo) a span,
+:root[data-theme="dark"] .card li a,
+:root[data-theme="dark"] .card li a:hover,
+:root[data-theme="dark"] .card-action span,
+:root[data-theme="dark"] .card ul li li {
+  color: #284e5f !important;
+}
+
+/* ลิงก์ในโหมดมืดให้อ่านชัด */
+:root[data-theme="dark"] a { color: #7dd3fc !important; }
+:root[data-theme="dark"] a:hover,
+:root[data-theme="dark"] a:focus { color: #ffffff !important; }
+
+
+/* ใช้ตัวแปรกับส่วนหลัก ๆ */
+body{ background: var(--bg); color: var(--text); }
+.card{ background: var(--card); border:1px solid var(--border); }
+a{ color: var(--brand); }
+.nav, header, footer{ background: var(--card); }
+
+/* วางสวิตช์มุมขวาบนของจอ */
+.theme-toggle{
+  position: fixed;
+  top: 16px;                 /* ระยะจากขอบบน */
+  right: 16px;               /* ระยะจากขอบขวา */
+  z-index: 1000;             /* ให้ลอยเหนือการ์ด/คอนเทนต์ */
+}
+
+/* กันชนมุมบนของมือถือที่มีรอยบาก (iOS notch) */
+@supports (padding: max(0px)) {
+  .theme-toggle{
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
+  }
+}
+
+/* จอเล็กมาก: ขยับลงมานิดกันทับปุ่ม/เมนู */
+@media (max-width: 480px){
+  .theme-toggle{ top: 12px; right: 12px; }
+}
+
+
 
 .angellist:hover {
   background-color: grey;
@@ -728,3 +838,47 @@ small {
   .card.medium .card-image.swap-container.fit:hover .img3,
   .card.medium .card-image.swap-container.fit:hover .img4 { animation: none; }
 }
+
+/* ซ่อน checkbox ให้มิด (ยังคลิกได้ผ่าน label) */
+.theme-toggle input{
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%);  /* ซ่อนทั้งภาพและพื้นที่คลิก */
+  overflow: hidden; white-space: nowrap;
+  opacity: 0;
+  appearance: none; -webkit-appearance: none;
+  pointer-events: none;
+}
+
+/* ทำ label เป็นปุ่มไอคอนอย่างเดียว */
+.theme-toggle .theme-switch{
+  position: relative;
+  display: grid; place-items: center;
+  width: 44px; height: 44px; border-radius: 999px;
+  background: transparent; border: 0; box-shadow: none;
+  cursor: pointer;
+}
+
+/* กันสไตล์ของ .switch/checkbox ของ Materialize ที่อาจสร้างกรอบ/ราง */
+.theme-toggle .theme-switch::before,
+.theme-toggle .theme-switch::after{ content: none !important; }
+.theme-toggle .switch,
+.theme-toggle .switch::before,
+.theme-toggle .switch::after{ all: unset !important; }
+
+/* ไอคอน */
+.theme-toggle .icon-sun-and-moon{
+  position: absolute; top: 50%; left: -18px; transform: translateY(-50%);
+  width: 32px; height: 32px; pointer-events: none;
+}
+.theme-toggle .icon-sun-and-moon img{ 
+  width:100%; 
+  height:100%; 
+  margin-left: 37px;
+  display:block; 
+}
+
+/* ตำแหน่งมุมขวาบน */
+.theme-toggle{ position: fixed; top:16px; right:16px; z-index:1000; }
+

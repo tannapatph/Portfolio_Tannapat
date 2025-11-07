@@ -1,10 +1,19 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <script>
+    (function(){
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
 
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -73,7 +82,6 @@
         </a>
       </li>
 
-
       <li class="bold">
         <a aria-label="Navigate to the About section" href="#about" class="waves-effect waves-dark teal-text"><i
             class="mdi-social-person small"></i><span>About me</span></a>
@@ -116,19 +124,20 @@
       </li>
 
       <li class="bold">
-        <!--
-        ICONS:
-        1. mdi-action-description
-        2. mdi-file-folder
-        3. mdi-file-folder-open
-        4. mdi-file-attachment
-        5. mdi-file-folder-shared
-        -->
-        <!-- <a aria-label="Open Tannapat's resume in a new tab" href="#resume" target="_blank"
-          onclick="window.open('https://drive.google.com/file/d/1vYi-bMyIsZPve0x_clxY8xsDtiHiOMd3/view?usp=sharing')"
-          class="waves-effect waves-dark teal-text"><i class="mdi-file-folder-open small"></i><span>Resume</span></a> -->
         <a aria-label="Open Tannapat's resume in a new tab" href="Tannapat_Phonhirunlak_CV.pdf" target="_blank"
         class="waves-effect waves-dark teal-text"><i class="mdi-file-folder-open small"></i><span>Resume</span></a>  
+      </li>
+            
+      <li class="bold">
+        <!-- Theme switch -->
+        <div class="theme-toggle">
+          <input id="themeToggle" type="checkbox" aria-label="Toggle dark mode" />
+          <label for="themeToggle" class="theme-switch">
+            <span class="icon-sun-and-moon" aria-hidden="true">
+              <img src="images/day-and-night.png" class="icon-sun-and-moon" alt="icon">  </span>
+            <span class="thumb" aria-hidden="true"></span>
+          </label>
+        </div>
       </li>
     </ul>
   </nav>
@@ -306,7 +315,7 @@
                 <span class="card-title activator teal-text hoverline">Engineering Mini-Project Electric-Drive<i
                     class="mdi-navigation-more-vert right"></i></span>
                 <p>
-                  Human machine interface app to drive Stepper motor with serial commands and live telemetry.
+                  Human machine interface app to drive Stepper motor with serial commands.
                 </p>
               </div>
               <div class="card-reveal">
@@ -373,9 +382,9 @@
                 </p>
                 <p class="brown-text">Bangkok, Thailand</p>
                 <p>
-                  <b>Degree: </b>Forth fourth-year in Electrical and Computer Engineering     
+                  <b>Degree: </b>Fourth-year in Electrical and Computer Engineering     
                   <br>
-                  <b>GPAX: </b>2.2/4.0
+                  <b>GPAX: </b>2.32/4.0
                 </p>
 
                 <ul>
@@ -469,6 +478,26 @@
       })
     })
   </script>
+  
+  <script>
+    // ถ้ายังไม่มีสคริปต์กำหนดธีมเริ่มต้นใน <head>, เพิ่มไว้ตามที่เคยให้ไปนะ
+    const root = document.documentElement;
+    const cb   = document.getElementById('themeToggle');
+
+    // ตั้งค่า checkbox ให้ตรงกับธีมปัจจุบัน
+    cb.checked = root.getAttribute('data-theme') === 'dark';
+
+    cb.addEventListener('change', () => {
+      if (cb.checked) {
+        root.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+      } else {
+        root.removeAttribute('data-theme');
+        localStorage.setItem('theme','light');
+      }
+    });
+  </script>
+
 </body>
 
 </html>
