@@ -496,17 +496,35 @@
   </script>
 
 <script>
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxXajPyPsk7CAudGhdcTVFtietJY7-5nLE1mjo8aTpZC_ZgkXNvWWmnBNmS9Iqu0DEZ/exec';
-  document.getElementById('contact').addEventListener('submit', async (e) => {
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzZU_vOdbMZbnn3IiTeXBl32p_qLDMT8227FrDEXqKQEVbnFHZZvSDR5nbYFsMNbVPA-w/exec'; // ต้องลงท้าย /exec
+
+  document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const btn = document.getElementById("sendBtn");
+    const statusEl = document.getElementById("contactStatus");
+
+    // แปลง FormData -> x-www-form-urlencoded เพื่อเลี่ยง CORS/preflight
     const fd = new FormData(e.target);
     const body = new URLSearchParams(fd).toString();
-    const res = await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body
-    });
-    try { console.log('status', res.status, await res.text()); } catch(e){}
+
+    btn.disabled = true;
+    statusEl.textContent = "Sending...";
+
+    try {
+      const res = await fetch(WEB_APP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      statusEl.textContent = "Sent! Thank you.";
+      e.target.reset();
+    } catch (err) {
+      statusEl.textContent = "Error: " + err.message;
+    } finally {
+      btn.disabled = false;
+    }
   });
   </script>
 
