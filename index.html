@@ -496,14 +496,13 @@
   </script>
 
 <script>
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzZU_vOdbMZbnn3IiTeXBl32p_qLDMT8227FrDEXqKQEVbnFHZZvSDR5nbYFsMNbVPA-w/exec'; // ต้องลงท้าย /exec
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxJesy3tIBJhMFD-ka0UU5isEzePNsjtiQN1v705-iZ0FFs1pS4vn3L274Wy-b112YS-Q/exec';
 
   document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const btn = document.getElementById("sendBtn");
     const statusEl = document.getElementById("contactStatus");
 
-    // แปลง FormData -> x-www-form-urlencoded เพื่อเลี่ยง CORS/preflight
     const fd = new FormData(e.target);
     const body = new URLSearchParams(fd).toString();
 
@@ -516,9 +515,24 @@
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      statusEl.textContent = "Sent! Thank you.";
+      const txt = await res.text();
+      // Apps Script doPost() คืน {ok, ownerOk, replyOk, err1, err2}
+      let data;
+      try { data = JSON.parse(txt); } catch { data = null; }
+
+      if (!res.ok) throw new Error(`HTTP ${res.status} ${txt}`);
+
+      if (data && data.ok) {
+        if (data.ownerOk) {
+          statusEl.textContent = "Sent! Thank you.";
+        } else {
+          statusEl.textContent = "Saved, but email failed: " + (data.err1 || "unknown error");
+        }
+      } else {
+        statusEl.textContent = "OK: " + txt; // กรณีตอบเป็นข้อความธรรมดา
+      }
+
       e.target.reset();
     } catch (err) {
       statusEl.textContent = "Error: " + err.message;
