@@ -496,40 +496,32 @@
   </script>
 
   <script>
-    const API_BASE = "http://localhost:3000";
+    const API_BASE = ""; 
 
-    const form = document.getElementById("contactForm");
-    const btn  = document.getElementById("sendBtn");
-    const statusEl = document.getElementById("contactStatus");
-
-    form?.addEventListener("submit", async (e) => {
+    document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const body = Object.fromEntries(new FormData(form).entries());
+      const body = Object.fromEntries(new FormData(e.target).entries());
+      const btn = document.getElementById("sendBtn");
+      const statusEl = document.getElementById("contactStatus");
 
       btn.disabled = true;
       statusEl.textContent = "Sending...";
-      statusEl.style.color = "#607d8b";
 
-      try{
+      try {
         const r = await fetch(`${API_BASE}/api/contact`, {
           method: "POST",
-          headers: {"Content-Type":"application/json"},
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
         });
-        if(!r.ok) throw new Error("Send failed");
-
+        if (!r.ok) throw new Error("Send failed");
         statusEl.textContent = "Sent! Thank you.";
-        statusEl.style.color = "#2e7d32";
-        form.reset();
-      }catch(err){
+        e.target.reset();
+      } catch (err) {
         statusEl.textContent = "Error: " + err.message;
-        statusEl.style.color = "#e53935";
-      }finally{
+      } finally {
         btn.disabled = false;
       }
     });
   </script>
-
 </body>
-
 </html>
