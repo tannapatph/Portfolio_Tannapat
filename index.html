@@ -496,32 +496,17 @@
   </script>
 
 <script>
-  document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxXajPyPsk7CAudGhdcTVFtietJY7-5nLE1mjo8aTpZC_ZgkXNvWWmnBNmS9Iqu0DEZ/exec';
+  document.getElementById('contact').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const body = Object.fromEntries(new FormData(e.target).entries());
-    const btn = document.getElementById("sendBtn");
-    const statusEl = document.getElementById("contactStatus");
-
-    btn.disabled = true;
-    statusEl.textContent = "Sending...";
-
-    try {
-      const r = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (!r.ok) {
-        const err = await r.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${r.status}`);
-      }
-      statusEl.textContent = "Sent! Thank you.";
-      e.target.reset();
-    } catch (err) {
-      statusEl.textContent = "Error: " + err.message;
-    } finally {
-      btn.disabled = false;
-    }
+    const fd = new FormData(e.target);
+    const body = new URLSearchParams(fd).toString();
+    const res = await fetch(WEB_APP_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body
+    });
+    try { console.log('status', res.status, await res.text()); } catch(e){}
   });
   </script>
 
