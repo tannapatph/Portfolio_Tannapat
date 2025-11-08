@@ -495,14 +495,6 @@
     });
   </script>
 
-  <form id="contactForm">
-  <input name="name" id="name" required>
-  <input name="email" id="email" type="email" required>
-  <textarea name="message" id="message" required></textarea>
-  <button id="sendBtn" type="submit">SEND</button>
-  <div id="contactStatus"></div>
-</form>
-
 <script>
   document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
