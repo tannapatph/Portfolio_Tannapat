@@ -102,7 +102,7 @@
   <nav class="hide-on-large only">
     <ul id="slide-out" class="side-nav">
       <li class="bold">
-        <a aria-label="Navigate to the About section" href="#about" class="waves-effect waves-dark teal-text"><i
+        <a aria-label="Navigate to the About section" href="#about" class="waves-effect teal-text"><i
             class="mdi-social-person small"></i><span>About me</span></a>
       </li>
 
@@ -164,16 +164,10 @@
       </div>
     </section>
 
-    <!-- Second Section: About -->
+    <!-- Second Section: About me-->
     <section id="about" class="section scrollspy">
       <h3 class="page-title white-text teal">About me</h3>
-      <div class="container flow-text">
-        <!-- <blockquote>
-          <h2>
-            A Software Developer with a passion for Backend Development and Artificial Intelligence.
-
-          </h2>
-        </blockquote> -->        
+      <div class="container flow-text">      
         <p>
           My name is Tannapat Phonhirunlak, I am a fourth-year student majoring in
             Electrical Engineering (English Program) in the
@@ -193,7 +187,7 @@
         </p>
         <p>
           <ul>
-            <li><b>Technicial skills:</b> Python, Java, C, HTML/CSS</li>
+            <li><b>Technicial skills:</b> Python, Java, JavaScript, C, HTML, CSS</li>
             <li><b>Soft skills:</b> Leadership, Collaboration and Teamwork , English Communication, Time Management, Problem-solving.</li>
           </ul>
           
@@ -269,8 +263,6 @@
                 </p>
               </div>
               <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
                 <span class="card-title grey-text"><small>Accomplishments</small><i
                     class="mdi-navigation-close right"></i></span>
                 <ul>
@@ -287,7 +279,7 @@
       </div>
     </section>
 
-    <!-- Fifth Section: Skills -->
+    <!-- Fourth Section: Skills -->
     <section id="skills" class="section scrollspy">
       <h3 class="page-title white-text teal">Skills</h3>
       <div class="container">
@@ -307,6 +299,9 @@
                 <img alt="" src="images/css3-300x300.jpg" class="responsive-img" />CSS
               </div>
               <div class="col s4 m2">
+                <img alt="" src="images/JavaScript.jpg" class="responsive-img" />JavaScript
+              </div>
+              <div class="col s4 m2">
                 <img alt="" src="images/C.jpg" class="responsive-img" />C
               </div>
               <div class="col s4 m2">
@@ -318,7 +313,7 @@
       </div>
     </section>
 
-    <!-- Seventh Section: Education -->
+    <!-- Fifth Section: Education -->
     <section id="education" class="section scrollspy">
       <h3 class="page-title white-text teal">Education</h3>
       <div class="container">
@@ -375,7 +370,7 @@
       </div>
     </section>
 
-    <!-- Eight Section: Contact -->
+    <!-- Sixth Section: Contact -->
     <section id="contact" class="section scrollspy">
       <h3 class="page-title white-text teal">Contact</h3>
       <div class="container">
@@ -410,7 +405,6 @@
                 </form>
               </div>
             </div>
-            <!-- ช่องทางติดต่อเดิมของคุณ (โทร/อีเมล/GitHub) จะคงไว้ด้านล่างได้ -->
             <h3 class="page-title white-text teal">My contact</h3>
             <div class="container">
               <p>
@@ -459,9 +453,9 @@
       $(".scrollspy").scrollSpy()
       // Initialize collapse button
       $(".button-collapse").sideNav({
-        menuWidth: 190, // Default is 240
-        edge: "left", // Choose the horizontal origin
-        closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        menuWidth: 190, 
+        edge: "left", 
+        closeOnClick: true 
       })
     })
   </script>
@@ -475,15 +469,12 @@
         <span class="thumb" aria-hidden="true"></span>
       </label>
     </div>
-  
+
   <script>
-    // ถ้ายังไม่มีสคริปต์กำหนดธีมเริ่มต้นใน <head>, เพิ่มไว้ตามที่เคยให้ไปนะ
     const root = document.documentElement;
     const cb   = document.getElementById('themeToggle');
 
-    // ตั้งค่า checkbox ให้ตรงกับธีมปัจจุบัน
     cb.checked = root.getAttribute('data-theme') === 'dark';
-
     cb.addEventListener('change', () => {
       if (cb.checked) {
         root.setAttribute('data-theme','dark');
@@ -495,52 +486,62 @@
     });
   </script>
 
-<script>
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxJesy3tIBJhMFD-ka0UU5isEzePNsjtiQN1v705-iZ0FFs1pS4vn3L274Wy-b112YS-Q/exec';
+  <form id="contactForm">   
+    <input id="name" type="text" required />
+    <input id="email" type="email" required />
+    <textarea id="message" required></textarea>
+    <button id="sendBtn" type="submit">Send</button>
+    <p id="contactStatus" role="status"></p>
+  </form>
 
-  document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById("sendBtn");
-    const statusEl = document.getElementById("contactStatus");
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxJesy3tIBJhMFD-ka0UU5isEzePNsjtiQN1v705-iZ0FFs1pS4vn3L274Wy-b112YS-Q/exec";
 
-    const fd = new FormData(e.target);
-    const body = new URLSearchParams(fd).toString();
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("contactForm");
+      const statusEl = document.getElementById("contactStatus");
 
-    btn.disabled = true;
-    statusEl.textContent = "Sending...";
-
-    try {
-      const res = await fetch(WEB_APP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body
-      });
-
-      const txt = await res.text();
-      // Apps Script doPost() คืน {ok, ownerOk, replyOk, err1, err2}
-      let data;
-      try { data = JSON.parse(txt); } catch { data = null; }
-
-      if (!res.ok) throw new Error(`HTTP ${res.status} ${txt}`);
-
-      if (data && data.ok) {
-        if (data.ownerOk) {
-          statusEl.textContent = "Sent! Thank you.";
-        } else {
-          statusEl.textContent = "Saved, but email failed: " + (data.err1 || "unknown error");
-        }
-      } else {
-        statusEl.textContent = "OK: " + txt; // กรณีตอบเป็นข้อความธรรมดา
+      if (!form) {
+        console.error("contactForm not found");
+        return;
       }
 
-      e.target.reset();
-    } catch (err) {
-      statusEl.textContent = "Error: " + err.message;
-    } finally {
-      btn.disabled = false;
-    }
-  });
-  </script>
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusEl && (statusEl.textContent = "Sending...");
 
+        try {
+          const fd = new FormData(form);
+          const name    = (fd.get("name")    || "").toString().trim();
+          const email   = (fd.get("email")   || "").toString().trim();
+          const message = (fd.get("message") || "").toString().trim();
+
+          if (!name || !email || !message) {
+            console.warn("Missing fields", { name, email, message });
+            throw new Error("Please fill in all fields.");
+          }
+
+          const body = new URLSearchParams({ name, email, message }).toString();
+          const res = await fetch(SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || data.ok === false) {
+            throw new Error(data.error || `HTTP ${res.status}`);
+          }
+
+          statusEl && (statusEl.textContent = "Sent! Thank you.");
+          form.reset();
+        } catch (err) {
+          console.error("Send failed:", err);
+          statusEl && (statusEl.textContent = "Error: " + err.message);
+          alert("Send failed: " + err.message);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
