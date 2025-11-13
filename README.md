@@ -42,7 +42,9 @@ A simple static portfolio built with HTML/CSS/JS. The contact form submits to a 
 ```text
 .
 ├─ index.html
-├─ style.css
+├─ images
+├─ css
+|   └─ style.css
 ├─ main.js
 └─ apps-script/
    └─ Code.gs   # Google Apps Script source
