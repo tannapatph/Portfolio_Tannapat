@@ -103,7 +103,7 @@
 :root[data-theme="dark"] .card-content, 
 :root[data-theme="dark"] p,
 :root[data-theme="dark"] li,
-:root[data-theme="dark"] span,
+
 :root[data-theme="dark"] h1,
 :root[data-theme="dark"] h2,
 :root[data-theme="dark"] h3,
@@ -846,4 +846,26 @@ small {
   font-size: 0.95rem;
   vertical-align: middle;
 }
+
+/* === Theme-aware Sidebar & Nav === */
+nav,
+ul.side-nav,
+ul.side-nav.fixed,
+ul.table-of-contents,
+ul.side-nav.fixed li.logo,
+ul.table-of-contents li.logo {
+  background: var(--card) !important; 
+}
+
+ul.side-nav.fixed li.logo {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+ul.table-of-contents li:not(.logo) a.active,
+ul.table-of-contents li:not(.logo) a:hover {
+  border-left: 3px solid var(--brand) !important;
+  background: transparent !important;
+}
+
+nav { background: var(--card) !important; }
 
