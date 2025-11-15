@@ -708,12 +708,18 @@ small {
 .card.medium .card-image.swap-container.fit:hover .img3 { animation: swapOut 0s infinite linear; }
 .card.medium.hover-swap:hover .img4,
 .card.medium .card-image.swap-container.fit:hover .img4 { animation: swapIn  2s infinite linear; }
+.card.medium.hover-swap:hover .img5,
+.card.medium .card-image.swap-container.fit:hover .img5 { animation: swapOut 0s infinite linear; }
+.card.medium.hover-swap:hover .img6,
+.card.medium .card-image.swap-container.fit:hover .img6 { animation: swapIn  2s infinite linear; }
 
 @media (prefers-reduced-motion: reduce){
   .card.medium .card-image.swap-container.fit:hover .img1,
   .card.medium .card-image.swap-container.fit:hover .img2 { animation: none; }
   .card.medium .card-image.swap-container.fit:hover .img3,
   .card.medium .card-image.swap-container.fit:hover .img4 { animation: none; }
+  .card.medium .card-image.swap-container.fit:hover .img5,
+  .card.medium .card-image.swap-container.fit:hover .img6 { animation: none; }
 }
 
 .theme-toggle input{
