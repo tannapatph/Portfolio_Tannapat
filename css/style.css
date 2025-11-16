@@ -875,3 +875,12 @@ ul.table-of-contents li:not(.logo) a:hover {
 
 nav { background: var(--card) !important; }
 
+/* ให้หัวข้อ h5 ในการ์ดของส่วน Skills มีช่องไฟเพิ่ม */
+#skills .card h5{
+  margin-bottom:16px !important;  /* จากเดิมที่ชิด/ติดลบ */
+}
+
+/* ถ้ายังอยากให้รูปห่างลงอีกนิด */
+#skills .card .row{
+  margin-top:20px;
+}
