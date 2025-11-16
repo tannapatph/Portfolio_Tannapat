@@ -186,7 +186,7 @@
         <p>
           <ul>
             <li><b>Technicial skills:</b> Python, Java, JavaScript, C, HTML, CSS</li>
-            <li><b>Soft skills:</b> Leadership, Collaboration and Teamwork , English Communication, Time Management, Problem-solving.</li>
+            <li><b>Soft skills:</b> Leadership, Collaboration and Teamwork , English Communication, Problem-solving.</li>
           </ul>
           
         </p>
@@ -201,6 +201,40 @@
       <h3 class="page-title white-text teal">Projects</h3>
       <div class="container">
         <div class="row">
+          <div class="col s12 m6 l4">
+            <div class="card medium hover-swap">
+              <div class="card-image waves-effect waves-block waves-light swap-container fit">
+                <img src="images/Bkk_Transit_Web.png"  
+                alt="Haedware" 
+                class="img7 activator" />
+              </div>
+
+              <div class="card-content">
+                <span class="card-title activator teal-text hoverline"> 
+                  <a href="https://bkk-transit-website-1.onrender.com/" class="teal-text hoverline">Bangkok Transit Optimizer</a><i
+                  class="mdi-navigation-more-vert right"></i></span>
+                <p>
+                  A web application for finding the fastest transit routes in Bangkok. 
+                </p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text"><small>Accomplishments</small><i
+                    class="mdi-navigation-close right"></i></span>
+                <ul>
+                  <li><b>Tools:</b> Frontend: HTML, CSS, JavaScript.<br>
+                                    Backend: Python, FastAPI, Uvicorn, NetworkX, Pandas.<br>
+                                    Database: CSV (for route connection data).<br>
+                                    Deployment: Git, GitHub, Render.</li>
+                  <li>This project is an evolution of previous work from an Algorithm and Data Structure course, designed to find routes across different systems (e.g., BTS, MRT, ARL) by focusing on the shortest total travel time.</li>
+                  <li>Loads station data from a CSV using Pandas and builds a time-weighted graph. It then applies Dijkstra's algorithm (via the NetworkX library) to find the fastest path based on travel time.</li>
+                  <li>A FastAPI server receives station inputs from the user and returns the optimal route as JSON.</li>
+                  <li>A simple HTML,JS,CSS interface that uses fetch to call the API and display results without reloading the page.</li>
+                  <li>Deployed on Render with a decoupled architecture, a web service for the python API and a static site for the HTML,JS frontend.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           <div class="col s12 m6 l4">
             <div class="card medium hover-swap">
               <div class="card-image waves-effect waves-block waves-light swap-container fit">
@@ -225,8 +259,8 @@
                 <span class="card-title grey-text"><small>Accomplishments</small><i
                     class="mdi-navigation-close right"></i></span>
                 <ul>
-                  <li><b>Tools:</b> Website – HTML, CSS, JavaScript.<br>
-                                    LINE Bot – Node.js, Express, LINE Messaging API, dotenv, Railway, ngrok, Git.</li>
+                  <li><b>Tools:</b> Website: HTML, CSS, JavaScript.<br>
+                                    LINE Bot: Node.js, Express, LINE Messaging API, dotenv, Railway, ngrok, Git.</li>
                   <li>Designed a simple saving goal calculator web UI for Thai users.</li>
                   <li>Built a LINE chatbot that parses Thai text to calculate saving plans (target, current, months).</li>
                   <li>Integrated LINE Messaging API webhook and deployed the bot on Railway cloud.</li>
